@@ -9,7 +9,6 @@ const PREVIEW_MESSAGES = [
 
 const SettingsPage = () => {
 	const { theme, setTheme } = useThemeStore();
-	console.log(THEMES);
 
 	return (
 		<div className="h-screen container mx-auto px-4 pt-20 max-w-5xl">
@@ -23,8 +22,8 @@ const SettingsPage = () => {
 					{THEMES.map((t) => (
 						<button
 							key={t}
-							className={`group flex flex-col items-center gap-1.5 p-2 rounded-lg transition-colors ${theme === t ? "bg-base-200" : "hover:bg-base-200/50"}
-`}
+							className={`group flex flex-col items-center gap-1.5 p-2 rounded-lg transition-colors ${theme === t ? "bg-base-200" : "hover:bg-base-200/50"} theme-controller`}
+							value={t}
 							onClick={() => setTheme(t)}
 						>
 							<div className="relative h-8 w-full rounded-md overflow-hidden" data-theme={t}>

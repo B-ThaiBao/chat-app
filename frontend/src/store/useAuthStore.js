@@ -53,6 +53,8 @@ export const useAuthStore = create((set, get) => ({
 			set({ authUser: res.data.user });
 			toast.success("Login successful");
 
+			get().checkAuth();
+			console.log(get().authUser);
 			get().connectSocket();
 		} catch (error) {
 			console.log(`Error logging in: ${error}`);
@@ -90,7 +92,7 @@ export const useAuthStore = create((set, get) => ({
 		}
 	},
 
-	connectSocket: () => {
+	connectSocket: async () => {
 		const { authUser } = get();
 		if (!authUser || get().socket?.connected) return;
 
@@ -100,7 +102,7 @@ export const useAuthStore = create((set, get) => ({
 			set({ onlineUsers: data });
 		});
 	},
-	disconnectSocket: () => {
+	disconnectSocket: async () => {
 		if (get().socket?.connected) {
 			get().socket.disconnect();
 		}
