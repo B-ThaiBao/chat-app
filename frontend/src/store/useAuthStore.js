@@ -8,6 +8,7 @@ const SERVER_URI = import.meta.env.MODE === "development" ? "http://localhost:50
 
 export const useAuthStore = create((set, get) => ({
 	authUser: null,
+	isLoginning: false,
 	isCheckingAuth: true,
 	isSigningUp: false,
 	isUpdatingProfile: false,
@@ -46,6 +47,7 @@ export const useAuthStore = create((set, get) => ({
 	},
 
 	login: async (data) => {
+		set({ isLoginning: true });
 		try {
 			const res = await axiosInstance.post("/auth/login", data);
 			set({ authUser: res.data.user });
@@ -56,6 +58,8 @@ export const useAuthStore = create((set, get) => ({
 			console.log(`Error logging in: ${error}`);
 			const message = error.response.data.message ? error.response.data.message : "Login failed";
 			toast.error(message);
+		} finally {
+			set({ isLoginning: false });
 		}
 	},
 
